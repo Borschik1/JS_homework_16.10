@@ -24,28 +24,36 @@
 				mistake_1 = (inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[4];
 				mistake_2 = (inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 != inputDigits[5];
 				mistake_3 = (inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6];
+				document.getElementById('errorData').value = "no error";
 				if (mistake_1) {
 					if (mistake_2) {
 						if (mistake_3) {
 							inputDigits[3] = (inputDigits[3] + 1) % 2;
+							document.getElementById('errorData').value = 3;
 						} else {
 							inputDigits[0] = (inputDigits[0] + 1) % 2;
+							document.getElementById('errorData').value = 0;
 						}
 					} else {
 						if (mistake_3) {
 							inputDigits[2] = (inputDigits[2] + 1) % 2;
+							document.getElementById('errorData').value = 2;
 						} else {
 							inputDigits[4] = (inputDigits[4] + 1) % 2;
+							document.getElementById('errorData').value = 4;
 						}
 					}
 				} else if (mistake_2) {
 					if (mistake_3) {
 						inputDigits[1] = (inputDigits[1] + 1) % 2;
+						document.getElementById('errorData').value = 1;
 					} else {
 						inputDigits[5] = (inputDigits[5] + 1) % 2;
+						document.getElementById('errorData').value = 5;
 					}
 				} else if (mistake_3) {
 					inputDigits[6] = (inputDigits[6] + 1) % 2;
+					document.getElementById('errorData').value = 6;
 				}
 				document.getElementById('decodedData').value = inputDigits.join('');
 			}
@@ -57,5 +65,6 @@
 		<p> <input type='text' id='codedData' /> coded data </p>
 		<p> <input type='button' onclick='decode()' value='Decode'/> </p>
 		<p> <input type='text' id='decodedData' /> decoded data </p>
+		<p> <input type='text' id='errorData' /> error </p>
 	</body>
 </html>
