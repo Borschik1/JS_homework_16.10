@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hamming code</title>
+		<script>
+			function code() {
+				let message = document.getElementById('inputData').value;
+				let inputDigits = message.split('');
+				for (let i = 0; i < inputDigits.length; i++) {
+					inputDigits[i] = inputDigits[i] - 0;
+				}
+				inputDigits.push((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2);
+				inputDigits.push((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2);
+				inputDigits.push((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2);
+				document.getElementById('codedData').value = inputDigits.join('');
+			}
+			function decode() {
+				let message = document.getElementById('codedData').value;
+				let inputDigits = message.split('');
+				for (let i = 0; i < inputDigits.length; i++) {
+					inputDigits[i] = inputDigits[i] - 0;
+				}
+				let mistake_1 = false, mistake_2 = false, mistake_3 = false;
+				mistake_1 = (inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[4];
+				mistake_2 = (inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 != inputDigits[5];
+				mistake_3 = (inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6];
+				if (mistake_1) {
+					if (mistake_2) {
+						if (mistake_3) {
+							inputDigits[3] = (inputDigits[3] + 1) % 2;
+						} else {
+							inputDigits[0] = (inputDigits[0] + 1) % 2;
+						}
+					} else {
+						if (mistake_3) {
+							inputDigits[2] = (inputDigits[2] + 1) % 2;
+						} else {
+							inputDigits[4] = (inputDigits[4] + 1) % 2;
+						}
+					}
+				} else if (mistake_2) {
+					if (mistake_3) {
+						inputDigits[1] = (inputDigits[1] + 1) % 2;
+					} else {
+						inputDigits[5] = (inputDigits[5] + 1) % 2;
+					}
+				} else if (mistake_3) {
+					inputDigits[6] = (inputDigits[6] + 1) % 2;
+				}
+				document.getElementById('decodedData').value = inputDigits.join('');
+			}
+		</script>
+	</head>
+	<body>
+		<p> <input type='text' id='inputData' /> input data </p>
+		<p> <input type='button' onclick='code()' value='Code'/> </p>
+		<p> <input type='text' id='codedData' /> coded data </p>
+		<p> <input type='button' onclick='decode()' value='Decode'/> </p>
+		<p> <input type='text' id='decodedData' /> decoded data </p>
+	</body>
+</html>
